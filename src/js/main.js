@@ -47,8 +47,6 @@
 
 	// for signup 
 	app.controller("travllerController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
-		console.log("inside travllerController");
-		
 
 	}])
 

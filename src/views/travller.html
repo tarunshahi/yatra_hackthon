@@ -4,7 +4,7 @@
 		<li class="groups"  ui-sref="travller.groups" ui-sref-active="active" ng-click="showGroups()">Groups</li>
 		<li class="feeds" ui-sref="travller.feeds" ui-sref-active="active" ng-click="showFeeds()">Feeds</li>
 	</ul>
-	<div class="amigo-tabs-body"ui-view>
+	<div class="amigo-tabs-body" ui-view>
 		
 	</div>
 </div>
@@ -26,8 +26,65 @@
 		cursor: pointer;
 		text-align: center;
 	}
+	.amigo-tabs-menu li:hover{
+		
+	}
+	.friends-body,.groups-body{
+		padding: 15px;
+		font-family: calibri;
+		border: 1px solid #ccc;
+		margin: 10px;
+		border-radius: 5px;
+		background: #fff;
+		box-shadow: 2px 3px 10px -2px #000;
+		font-size: 14px;
+	}
 	.amigo-tabs-menu li.active{
 		width: 33%;
 		border-bottom: 2px solid #ea2330;
 	}
+	.user-contacts-available{
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		width:100%;
+	}
+	.user-contact{
+		clear:both;
+	}
+	.user-icon{
+		font-size: 25px;
+		top: -4px;
+		position: relative;
+	}
+	.user-detail{
+		display: inline-block;
+		float: left;
+	}.user-contact-number{
+		font-size: 11px;
+	}
+	.user-name{
+		line-height: 16px;sss
+	}
+	.left-icon-area{
+		width: 15%;
+		float: left;
+	}
+	.inv-btn-style{
+		position: absolute;
+		background: #ea2330;
+		color: #fff;
+		font-size: 12px;
+		font-weight: 600;
+		padding: 8px 9px;
+		letter-spacing: 0.5px;
+		border-radius: 4px;
+		outline: none;
+		border: none;
+		right: 25px;
+		margin-top: -15px;
+		cursor:pointer;
+	}
+	.groups-section i{padding-top: 30px;font-size: 40px;padding-bottom:10px;}
+	.user-notification{border: 1px solid #ea2330;border-radius: 4px;margin-bottom: 2px;float: left;padding: 5px;cursor:pointer;}
 </style>
