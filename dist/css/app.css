@@ -253,7 +253,7 @@ h1 {
 
 .reset {
   color: #333;
-  text-decoration: none; }
+  text-decoration: none !important; }
 
 .caption {
   position: absolute;
