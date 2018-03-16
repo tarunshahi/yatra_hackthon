@@ -16,6 +16,21 @@
 			templateUrl: TEMPLATEPATH + 'travller.html',
 			controller: "travllerController"
 		})
+		.state('travller.friends',{
+			url:'/friends',
+			templateUrl: TEMPLATEPATH + '_friends.html',
+			controller: "travllerController"
+		})
+		.state('travller.groups',{
+			url:'/groups',
+			templateUrl: TEMPLATEPATH + '_groups.html',
+			controller: "travllerController"
+		})
+		.state('travller.feeds',{
+			url:'/feeds',
+			templateUrl: TEMPLATEPATH + '_feeds.html',
+			controller: "travllerController"
+		})
 	}])
 
 	app.run(['$rootScope',"$window",'localStorage',function($rootScope,$window,localStorage){
@@ -39,6 +54,7 @@
 
 
 			}])
+
 
 
 	app.factory("localStorage",['$window',function($window){
