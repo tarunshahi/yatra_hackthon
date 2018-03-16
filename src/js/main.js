@@ -2,7 +2,7 @@
 	'use strict';
 	
 	var TEMPLATEPATH = '/dist/views/';
-	var app = angular.module('website-builder',['ui.router']);
+	var app = angular.module('website-builder',['ui.router','JsonProvider','btford.socket-io']);
 
 	// for setting the routes
 	app.config(["$stateProvider","$urlRouterProvider",function($stateProvider,$urlRouterProvider){
@@ -11,6 +11,16 @@
 			url:'/home',
 			templateUrl: TEMPLATEPATH + 'home.html',
 			controller: "homeController",
+		})
+		.state('holidays',{
+			url:'/holidays',
+			templateUrl: TEMPLATEPATH + 'holidays.html',
+			controller: "holidaysController"
+		})
+		.state('location',{
+			url:'/location/:id',
+			templateUrl:TEMPLATEPATH + '_holidays_location.html',
+			controller: "holidaysController"
 		})
 		.state('travller',{
 			url:'/amigos',
@@ -58,6 +68,25 @@
 		console.log("inside home Controller");
 		
 
+	}])
+
+	app.controller("holidaysController",['$scope','$rootScope','$window','$state','$compile',"jsonServiceProvider","$stateParams",function($scope,$rootScope,$window,$state,$compile,jsonServiceProvider,$stateParams){
+		console.log("inside holidaysController");
+		
+		$scope.goToBack = function(){
+			$window.history.back();
+		}
+		$scope.location = $stateParams.id;
+		$scope.holidayData = jsonServiceProvider.getHolidayPackage();
+		console.log($scope.holidayData);
+
+		$scope.chnageFavourite =function(list){
+			list.favourite = list.favourite ? false:true;
+		}
+		$scope.goToDestination = function(list){
+			console.log("destinatin called");
+			$state.go("location",{"id":list.destination});
+		}
 	}])
 	
 

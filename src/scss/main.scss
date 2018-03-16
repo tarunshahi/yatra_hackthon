@@ -1,6 +1,7 @@
 @import "login.scss";
 @import "signup.scss";
 @import "home";
+@import "holidays";
 
 html,body{
 	margin:0px;
@@ -23,4 +24,21 @@ html,body{
     background-size: cover;
     opacity: 0.8;
     z-index: -2;
+}
+.no-padding{
+    padding:0px !important;
+}
+.no-margin{
+    margin:0px !important;
+}
+.back-arrow{
+    position:absolute;
+    left:10px;
+    vertical-align:middle;
+    display:table-cell;
+    cursor:pointer;
+}
+.header-label{
+    text-align:center;
+    font-weight:600;
 }
