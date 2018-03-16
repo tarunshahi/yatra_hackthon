@@ -92,10 +92,8 @@
 			}])
 
 	app.controller("travllerController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
-		console.log("inside travllerController");
 
-
-			}])
+	}])
 
 
 	app.controller("homeController",['$scope','$rootScope','$window','$state','$compile',function($scope,$rootScope,$window,$state,$compile){
