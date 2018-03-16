@@ -19,5 +19,8 @@
     "gulp-strip-comments": "^2.5.1",
     "gulp-uglify": "^3.0.0",
     "node-static": "^0.7.10"
+  },
+  "devDependencies": {
+    "socket.io": "^2.0.4"
   }
 }

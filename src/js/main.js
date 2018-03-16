@@ -15,22 +15,22 @@
 		.state('travller',{
 			url:'/amigos',
 			templateUrl: TEMPLATEPATH + 'travller.html',
-			controller: "travllerController"
+			controller: "amigoController"
 		})
 		.state('travller.friends',{
 			url:'/friends',
 			templateUrl: TEMPLATEPATH + '_friends.html',
-			controller: "travllerController"
+			controller: "friendsController"
 		})
 		.state('travller.groups',{
 			url:'/groups',
 			templateUrl: TEMPLATEPATH + '_groups.html',
-			controller: "travllerController"
+			controller: "groupsController"
 		})
 		.state('travller.feeds',{
 			url:'/feeds',
 			templateUrl: TEMPLATEPATH + '_feeds.html',
-			controller: "travllerController"
+			controller: "feedsController"
 		})
 	}])
 
@@ -43,12 +43,23 @@
 	// for login
 	app.controller("loginController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
 		
-	}])
-
+	}]);
 	// for signup 
 	app.controller("travllerController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
 
-	}])
+	}]);
+	app.controller("amigoController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
+
+	}]);
+	app.controller("groupsController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
+
+	}]);
+	app.controller("friendsController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
+
+	}]);
+	app.controller("feedsController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
+
+	}]);
 
 
 	// home controller for handling all drag drop resize generate code feature
