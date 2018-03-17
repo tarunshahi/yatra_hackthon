@@ -19,9 +19,9 @@
 							<i class="fa fa-heart pull-right" ng-class="{'red':list.favourite}" ng-click="chnageFavourite(list)"></i>
 						</div>
 						<div class="row no-margin ">
-							<div class="col-4" ng-class="{'active-red': accordian.active == $index + '0'}" ng-click="activeAccordian($index + '0')">Animities</div>
-							<div class="col-4" ng-class="{'active-red': accordian.active == $index + '1'}" ng-click="activeAccordian($index + '1')">Review</div>
-							<div class="col-4" ng-class="{'active-red': accordian.active == $index + '2'}"ng-click="activeAccordian($index + '2')">Booking</div>
+							<div class="col-4" ng-class="{'red-active': accordian.active == ($index + '0')}" ng-click="activeAccordian($index + '0')">Animities</div>
+							<div class="col-4" ng-class="{'red-active': accordian.active == ($index + '1')}" ng-click="activeAccordian($index + '1')">Review</div>
+							<div class="col-4" ng-class="{'red-active': accordian.active == ($index + '2')}"ng-click="activeAccordian($index + '2')">Booking</div>
 						</div>
 						<div class="row no-margin">
 							<div class="col-12 accordian-body" ng-if="accordian.active == ($index + '0')" ng-cloak>Block 1</div>
