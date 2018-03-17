@@ -1,0 +1,49 @@
+<div class="container-fluid no-padding">
+	<div class="nav justify-content-center header">
+      <div class="row no-margin no-padding">
+      	<div class="back-arrow" ng-click="goToBack()">
+      		<i class="fa fa-arrow-left"></i>
+      	</div>
+        <div class="header-label"><span style="padding-right:20px;">Search Bus</span> </div>
+      </div>
+  </div>
+  <div class="holiday-content">
+  	<form style="height:calc(100vh - 52px)">
+  		<div class="row no-margin">
+  			<div class="form-group col-5 no-padding">
+			    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="source" ng-model="bus.from" uib-typeahead="city as city.name for city in cityList | filter:{name:$viewValue} |limitTo : 6" typeahead-template-url="customTemplate.html"  typeahead-show-hint="true" typeahead-min-length="0">
+		  </div>
+		  <div class="form-group justify-content-center col-2 no-padding" style="text-align: center">
+		  	<i class="fa fa-arrow-right middle-icon"></i>
+		  </div>
+		  <div class="form-group col-5 no-padding">
+			    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Destination" ng-model="bus.to" uib-typeahead="city as city.name for city in cityList | filter:{name:$viewValue} |limitTo : 6" typeahead-template-url="customTemplate.html"  typeahead-show-hint="true" typeahead-min-length="0">
+		  </div>
+  		</div>
+
+		  		  <div class="form-group">
+		  		<label for="date">Depart Date</label>
+			    <input type="date" class="form-control" id="exampleCheck1" ng-model="bus.startDate">
+		  </div>
+		  <div class="form-group">
+			    <label for="inputState">Select no of Passanger</label>
+			      <select id="inputState" class="form-control"  ng-model="bus.noOfPassanger">
+			        <option value="">Select number of passanger</option>
+			        <option value="1">1</option>
+			        <option value="2">2</option>
+			        <option value="3">3</option>
+			        <option value="4">4</option>
+			      </select>
+		  </div>
+		  <div class="row no-margin justify-content-center">
+		  		<button type="submit" class="btn btn-danger" ng-click="searchBus()">Search</button>
+		  </div>
+
+		  	</form>
+  </div>
+</div> 
+<script type="text/ng-template" id="customTemplate.html">
+        <a style="padding:8px 10px;font-size:14px;">
+            <span style="margin-right:5px;" ng-bind-html=" match.model.name  | uibTypeaheadHighlight:query"></span>
+        </a>
+</script> 

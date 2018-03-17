@@ -44,3 +44,26 @@
 .red-active{
 	border-red:2px solid red;
 }
+label{
+	font-size: 14px;
+    font-weight: 600;
+}
+form{
+	padding:10px;
+}
+.middle-icon{
+	border: 1px solid #007bff;
+    border-radius: 50%;
+    padding: 5px;
+    color: #007bff;
+}
+.uib-typeahead-match{
+	border-bottom:1px solid #dcdcdc;
+}
+.uib-typeahead-match:last-child{
+	border-bottom:none !important;
+}
+.uib-typeahead-match:hover{
+	background:#007bff;
+	color:#fff;
+}

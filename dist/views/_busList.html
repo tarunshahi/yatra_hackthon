@@ -1,0 +1,28 @@
+<div class="container-fluid no-padding">
+	<div class="nav justify-content-center header">
+      <div class="row no-margin no-padding">
+      	<div class="back-arrow" ng-click="goToBack()">
+      		<i class="fa fa-arrow-left"></i>
+      	</div>
+        <div class="header-label"><span style="padding-right:20px;">Bus List</span> </div>
+      </div>
+  </div>
+  <div class="holiday-content">
+  		<ul class="list-group">
+		  <li class="list-group-item" ng-repeat="bus in busList track by $index">
+		  		<div class="row no-margin">
+		  			<div class="col-4 no-padding text-truncate" title="{{bus.opNm}}">{{bus.opNm}}</div>
+		  			<div class="col-3 no-padding">{{bus.dt}}</div>
+		  			<div class="col-3 no-padding">{{bus.at}}</div>
+		  			<div class="col-2 no-padding text-right"><b><i class="fa fa-rupee"></i>{{bus.fare}}</b></div>
+		  		</div>
+		  		<div class="row no-margin">
+		  			<div class="col-8 no-padding text-truncate" style="color:#ccc;">{{bus.bType}}</div>
+		  			<div class="col-4 no-padding pull-right text-right">
+		  				<button class="btn btn-sm btn-danger" ng-click="bookBus(bus)">BOOK</button>
+		  			</div>
+		  		</div>
+		  </li>
+		</ul>
+  </div>
+</div>  

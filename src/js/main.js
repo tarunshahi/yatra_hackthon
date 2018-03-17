@@ -3,7 +3,7 @@
 	
 	
 	var TEMPLATEPATH = '/dist/views/';
-	var app = angular.module('website-builder',['ui.router','JsonProvider','btford.socket-io']);
+	var app = angular.module('website-builder',['ui.router','JsonProvider','btford.socket-io','ui.bootstrap']);
 
 	
 	// for setting the routes
@@ -23,6 +23,22 @@
 			url:'/location/:id',
 			templateUrl:TEMPLATEPATH + '_holidays_location.html',
 			controller: "holidaysController"
+		})
+		.state("bus",{
+			url:'/bus',
+			templateUrl:TEMPLATEPATH + '_bus.html',
+			controller:"busController"
+		})
+		.state("busList",{
+			url:'/buslist',
+			params:{
+				"to":'',
+				"from":'',
+				"start_date":'',
+				"end_date":''
+			},
+			templateUrl:TEMPLATEPATH + '_busList.html',
+			controller:"busController"
 		})
 		.state('travller',{
 			url:'/amigos',
@@ -87,6 +103,32 @@
 		/* socket.on("notification",function(){
 			$scope.notification.push({"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."});
 		}); */
+	}]);
+
+	app.controller("busController",['$scope','$rootScope','$window','localStorage','$state','jsonServiceProvider','$stateParams',function($scope,$rootScope,$window,localStorage,$state,jsonServiceProvider,$stateParams){
+		$scope.cityList = jsonServiceProvider.getCityList();
+		$scope.bus = {};
+		$scope.busList = jsonServiceProvider.getBusList();
+		$scope.goToBack = function(){
+			$window.history.back();
+		}
+
+		$scope.searchBus = function(){
+			console.log("bus search",$scope.bus);
+			var startdate = new Date($scope.bus.startDate);
+			var end_date = startdate.setDate(startdate.getDate(0) + 1);
+			$state.go('busList',{'to':$scope.bus.from,'from':$scope.bus.to,'start_date':$scope.bus.startDate,'end_date':end_date});
+		}
+
+		$scope.bookBus = function(busList){
+			var request = {};
+			request.bus_no = busList.bid;
+			request.to = $stateParams.to ;
+			request.from = $stateParams.from;
+			request.start_date = $stateParams.start_date;
+			request.end_date = $stateParams.end_date;
+		}		
+
 	}]);
 	
 	var userId = "";
