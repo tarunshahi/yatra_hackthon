@@ -94,15 +94,15 @@
 		}
 		$scope.getTargetDate =function(date){
 			var a = new Date(date);
-			var b = new Date(a.setDate(a.getdate + 5));
+			var b = new Date(a.setDate(a.getDate() + 5));
 			return b;
 		}
 
 		$scope.confirmBooking = function(list){
 			console.log("booking",list);
 			var requestData={ 
-					u_id: '1234567' + (Math.random() * 1000),
-					startdate: (Math.random() * 12),
+					u_id: '1234567' + Math.floor(Math.random() * 1000),
+					startdate: new Date(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
 					flight:{
 						to:$scope.location,
 						from:'India',
@@ -112,9 +112,9 @@
 					hotel:{
 						name:list.packageTitle,
 						place: $scope.location,
-						stay_start_date: list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear,
+						stay_start_date: new Date(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
 						stay_end_date:$scope.getTargetDate(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
-						price: Math.random() * 120000,
+						price: Math.floor(Math.random() * 120000),
 					}
 				}
 				console.log("requestData",requestData);
