@@ -115,17 +115,52 @@
 		$scope.goToBack = function(){
 			$window.history.back();
 		}
+		$scope.accordian = {};
+		$scope.activeAccordian = function(data){
+			console.log("accordian called");
+			$scope.accordian.active = data; 
+		};
 		$scope.location = $stateParams.id;
 		$scope.holidayData = jsonServiceProvider.getHolidayPackage();
+		$scope.packageList = jsonServiceProvider.getPackageDetails();
 		console.log($scope.holidayData);
 
 		$scope.chnageFavourite =function(list){
 			list.favourite = list.favourite ? false:true;
 		}
+
 		$scope.goToDestination = function(list){
 			console.log("destinatin called");
 			$state.go("location",{"id":list.destination});
 		}
+		$scope.getTargetDate =function(date){
+			var a = new Date(date);
+			var b = new Date(a.setDate(a.getDate() + 5));
+			return b;
+		}
+
+		$scope.confirmBooking = function(list){
+			console.log("booking",list);
+			var requestData={ 
+					u_id: '1234567' + Math.floor(Math.random() * 1000),
+					startdate: new Date(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
+					flight:{
+						to:$scope.location,
+						from:'India',
+						start_date: new Date(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
+						end_date: $scope.getTargetDate(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
+					},
+					hotel:{
+						name:list.packageTitle,
+						place: $scope.location,
+						stay_start_date: new Date(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
+						stay_end_date:$scope.getTargetDate(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
+						price: Math.floor(Math.random() * 120000),
+					}
+				}
+				console.log("requestData",requestData);
+		}
+
 	}])
 	
 
