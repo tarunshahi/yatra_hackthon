@@ -2,39 +2,15 @@
 <div class="groups-body">
 	<div style="clear:both;"></div>
 	<p style="text-align:center;" class="groups-section">
-		<i class="fa fa-rss" aria-hidden="true"></i>
+		<i class="fa fa-rss" ng-click="testNotify()" aria-hidden="true"></i>
 		<p style="font-weight:bold;font-size: 15px;text-align: center;">Checkout your feeds</p>
 		<div style="clear:both;"></div><br>
 	<ul class="user-contacts-available">
-		<li class="user-notification">
+		<li class="user-notification" ng-repeat="note in notification">
 			<p class="left-icon-area"><span class="user-icon"><i class="fa fa-bell-o"></i></span></p>
 			<div class="user-detail" style="width: 80%;">
 				<div class="user-name">
-					Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel.
-				</div>
-			</div>
-		</li>
-		<li class="user-notification">
-			<p class="left-icon-area"><span class="user-icon"><i class="fa fa-bell-o"></i></span></p>
-			<div class="user-detail" style="width: 80%;">
-				<div class="user-name">
-					Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel.
-				</div>
-			</div>
-		</li>
-		<li class="user-notification">
-			<p class="left-icon-area"><span class="user-icon"><i class="fa fa-bell-o"></i></span></p>
-			<div class="user-detail" style="width: 80%;">
-				<div class="user-name">
-					Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel.
-				</div>
-			</div>
-		</li>
-		<li class="user-notification">
-			<p class="left-icon-area"><span class="user-icon"><i class="fa fa-bell-o"></i></span></p>
-			<div class="user-detail" style="width: 80%;">
-				<div class="user-name">
-					Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel.
+					{{note.msg}}
 				</div>
 			</div>
 		</li>

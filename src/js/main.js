@@ -2,7 +2,7 @@
 	'use strict';
 	
 	var TEMPLATEPATH = '/dist/views/';
-	var app = angular.module('website-builder',['ui.router']);
+	var app = angular.module('website-builder',['ui.router','JsonProvider','btford.socket-io']);
 
 	// for setting the routes
 	app.config(["$stateProvider","$urlRouterProvider",function($stateProvider,$urlRouterProvider){
@@ -11,6 +11,16 @@
 			url:'/home',
 			templateUrl: TEMPLATEPATH + 'home.html',
 			controller: "homeController",
+		})
+		.state('holidays',{
+			url:'/holidays',
+			templateUrl: TEMPLATEPATH + 'holidays.html',
+			controller: "holidaysController"
+		})
+		.state('location',{
+			url:'/location/:id',
+			templateUrl:TEMPLATEPATH + '_holidays_location.html',
+			controller: "holidaysController"
 		})
 		.state('travller',{
 			url:'/amigos',
@@ -45,28 +55,77 @@
 		
 	}]);
 	// for signup 
-	app.controller("travllerController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
-
+	app.controller("travllerController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
+		
 	}]);
-	app.controller("amigoController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
-
+	app.controller("amigoController",['$scope','$rootScope','$window','localStorage','$state','socket', function($scope,$rootScope,$window,localStorage,$state,socket){
+		$rootScope.notificationsCount = 0;
+		$rootScope.notifyShow = false;
+		socket.on("notification",function(){
+			$scope.notification.push({"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."});
+		}); 
 	}]);
-	app.controller("groupsController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
-
+	app.controller("groupsController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
+		/* socket.on("notification",function(){
+			$scope.notification.push({"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."});
+		}); */
 	}]);
-	app.controller("friendsController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
-
+	app.controller("friendsController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
+		$scope.friends = [{"name":"Srinivas Nagorkar","mobile":"+91-9742015199"},{"name":"Ramabrahmam C","mobile":"+91-9898778778"},{"name":"Raj Kumar Thakur","mobile":"+91-98767767878"},{"name":"Deepanshu Sharma","mobile":"+91-9878765434"},{"name":"Vishnu Vardhan","mobile":"+91-9742015199"}]
+		$scope.invites = [{"name":"Taraun Shahi","mobile":"+91-9098989878"},{"name":"Ventak Anna","mobile":"+91-9898778778"},{"name":"Raj Kumar Thakur","mobile":"+91-98767767878"},{"name":"Deepanshu Sharma","mobile":"+91-9878765434"},{"name":"Vishnu Vardhan","mobile":"+91-9742015199"}]
+		/* socket.on("notification",function(){
+			$scope.notification.push({"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."});
+		}); */
 	}]);
-	app.controller("feedsController",['$scope','$rootScope','$window','localStorage','$state',function($scope,$rootScope,$window,localStorage,$state){
+	app.controller("feedsController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
+		$scope.notification= [{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."}];
+		$rootScope.notificationsCount = $scope.notification.length;
+		$scope.testNotify = function(){
+			if (Notification.permission !== "granted")
+				Notification.requestPermission();
+			  else {
+				var notification = new Notification('Yatra Amigos Update', {
+				  icon: 'https://css.yatra.com/content/fresco/beetle/images/newIcons/yatra_logo.svg',
+				  body: "Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel.",
+				});
 
+				notification.onclick = function () {
+				  window.open("http://localhost:3333/#!/amigos/feeds");      
+				};
+
+			  }
+		};
+		/* socket.on("notification",function(){
+			$scope.notification.push({"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."});
+		}); */
 	}]);
-
+	
+	
 
 	// home controller for handling all drag drop resize generate code feature
 	app.controller("homeController",['$scope','$rootScope','$window','$state','$compile',function($scope,$rootScope,$window,$state,$compile){
 		console.log("inside home Controller");
 		
 
+	}])
+
+	app.controller("holidaysController",['$scope','$rootScope','$window','$state','$compile',"jsonServiceProvider","$stateParams",function($scope,$rootScope,$window,$state,$compile,jsonServiceProvider,$stateParams){
+		console.log("inside holidaysController");
+		
+		$scope.goToBack = function(){
+			$window.history.back();
+		}
+		$scope.location = $stateParams.id;
+		$scope.holidayData = jsonServiceProvider.getHolidayPackage();
+		console.log($scope.holidayData);
+
+		$scope.chnageFavourite =function(list){
+			list.favourite = list.favourite ? false:true;
+		}
+		$scope.goToDestination = function(list){
+			console.log("destinatin called");
+			$state.go("location",{"id":list.destination});
+		}
 	}])
 	
 
@@ -95,7 +154,31 @@
 
 
 		};
-	}])
+	}]);
+	
+	app.factory('socketio',['$rootScope',function ($rootScope) {
+	  var socket = io.connect();
+	  return {
+		on: function (eventName, callback) {
+		  socket.on(eventName, function () {  
+			var args = arguments;
+			$rootScope.$apply(function () {
+			  callback.apply(socket, args);
+			});
+		  });
+		},
+		emit: function (eventName, data, callback) {
+		  socket.emit(eventName, data, function () {
+			var args = arguments;
+			$rootScope.$apply(function () {
+			  if (callback) {
+				callback.apply(socket, args);
+			  }
+			});
+		  })
+		}
+	  };
+	}]);
 
 
 	// Deirective for editing Droped element

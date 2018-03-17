@@ -2,7 +2,7 @@
 	<ul class="amigo-tabs-menu">
 		<li class="friends" ui-sref="travller.friends" ui-sref-active="active" ng-click="showFriends()">Friends</li>
 		<li class="groups"  ui-sref="travller.groups" ui-sref-active="active" ng-click="showGroups()">Groups</li>
-		<li class="feeds" ui-sref="travller.feeds" ui-sref-active="active" ng-click="showFeeds()">Feeds</li>
+		<li class="feeds" ui-sref="travller.feeds" ui-sref-active="active" ng-click="showFeeds()">Feeds<span class="notificationsCount">{{notificationsCount}}</span></li>
 	</ul>
 	<div class="amigo-tabs-body" ui-view>
 
@@ -87,4 +87,5 @@
 	}
 	.groups-section i{padding-top: 30px;font-size: 40px;padding-bottom:10px;}
 	.user-notification{border: 1px solid #ea2330;border-radius: 4px;margin-bottom: 2px;float: left;padding: 5px;cursor:pointer;}
+	.notificationsCount{background: #ea2330;color: #fff;padding: 1px 9px;border-radius: 27px;position: absolute;top: 5px;right: 12px;}
 </style>

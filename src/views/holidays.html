@@ -1,0 +1,36 @@
+<div class="container-fluid no-padding">
+	<div class="nav justify-content-center header">
+      <div class="row no-margin no-padding">
+      	<div class="back-arrow" ng-click="goToBack()">
+      		<i class="fa fa-arrow-left"></i>
+      	</div>
+        <div class="header-label">Holidays</div>
+      </div>
+  </div>
+  <div class="holiday-content">
+  	<p class="label no-margin">Yatra Custom Package</p>
+  	<div class="row no-margin">
+  		<div class="col-6 no-padding" ng-repeat="list in holidayData.International_Packages track by $index">
+  			<div class="card" style="margin:5px 10px;" ng-click="goToDestination(list)">
+				<img class="card-img-top" src="{{list.destinationImages.imageUrl}}" alt="Card image cap">
+				<div class="card-block">
+					<div class="row no-margin">
+						<h6 class="card-title col-10 no-padding">{{list.destination}}</h6>
+						<i class="fa fa-heart pull-right" ng-class="{'red':list.favourite}" ng-click="chnageFavourite(list)"></i>
+					</div>
+					<div class="row no-margin">
+						<div class="col-12 no-padding">
+							<small class="card-small-label">Starting From</small>
+							<p class="no-margin red f-14" style="color:red"><i class="fa fa-rupee"></i>{{list.minPrice}}</p>
+						</div>
+						<div class="col-12 no-padding">
+							<small class="card-small-label">Recomanded By</small>
+							<p class="no-margin red f-14" style="color:red">100 People/6 Friend's</p>
+						</div>
+					</div>
+				</div>
+			</div>
+  		</div>
+  	</div>
+  </div>
+</div>

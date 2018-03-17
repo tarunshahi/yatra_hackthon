@@ -34,6 +34,7 @@ function vendor() {
         gulpPaths.bc + 'bootstrap/dist/js/bootstrap.min.js',
         gulpPaths.bc + 'angular/angular.min.js',
         gulpPaths.bc + 'angular-ui-router/release/angular-ui-router.min.js',
+        gulpPaths.bc + 'angular-socket-io/socket.min.js',
     ])
     .pipe(concat('vendor.js'))
     .pipe(gulp.dest(gulpPaths.dist + 'js'));
