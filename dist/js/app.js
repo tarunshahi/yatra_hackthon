@@ -43,8 +43,10 @@
 (function (window, angular) {
 	'use strict';
 
-		var TEMPLATEPATH = '/dist/views/';
+
+			var TEMPLATEPATH = '/dist/views/';
 	var app = angular.module('website-builder',['ui.router','JsonProvider','btford.socket-io']);
+
 
 	app.config(["$stateProvider","$urlRouterProvider",function($stateProvider,$urlRouterProvider){
 		$stateProvider
@@ -99,8 +101,8 @@
 	app.controller("amigoController",['$scope','$rootScope','$window','localStorage','$state','socket', function($scope,$rootScope,$window,localStorage,$state,socket){
 		$rootScope.notificationsCount = 0;
 		$rootScope.notifyShow = false;
-		socket.on("notification",function(){
-			$scope.notification.push({"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."});
+		socket.on("new_notification",function(res){
+			console.log(res);
 		}); 
 	}]);
 	app.controller("groupsController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
@@ -112,35 +114,56 @@
 	app.controller("feedsController",['$scope','$rootScope','$window','localStorage','$state', function($scope,$rootScope,$window,localStorage,$state){
 		$scope.notification= [{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."},{"nId":123,"msg":"Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel."}];
 		$rootScope.notificationsCount = $scope.notification.length;
-		$scope.testNotify = function(){
-			if (Notification.permission !== "granted")
-				Notification.requestPermission();
-			  else {
-				var notification = new Notification('Yatra Amigos Update', {
-				  icon: 'https://css.yatra.com/content/fresco/beetle/images/newIcons/yatra_logo.svg',
-				  body: "Rajnish is Travelling to pune this monday, you may plan to meet him by yatra just by 100KM of Bus Travel.",
-				});
 
-				notification.onclick = function () {
-				  window.open("http://localhost:3333/#!/amigos/feeds");      
-				};
-
-			  }
-		};
 	}]);
 
+		var userId = "";
+	app.controller("homeController",['$scope','$rootScope','$window','$state','$compile','$http','socket',function($scope,$rootScope,$window,$state,$compile,$http,socket){
+		socket.on('connect',function(data){
+			console.log(data);
+			socket.emit('join',{'mobile':"1234567123"});
+		});
+		socket.on("new_notification",function(res){
+			console.log(res);
+		}); 
+		$rootScope.userData = {};
+		$http({
+			url:"http://local.yatra.com:3000/api/user/1234567"+(Math.round((Math.random() * 99))+100),
+			method:"GET"
 
+					}).then(function(res){
+			$rootScope.userData = res.data[0];
+			userId =  $rootScope.userData.username;
 
-	app.controller("homeController",['$scope','$rootScope','$window','$state','$compile',function($scope,$rootScope,$window,$state,$compile){
-		console.log("inside home Controller");
+					},function(err){
 
+								});
+	}])
 
-			}])
+	app.controller("holidaysController",['$scope','$rootScope','$window','$state','$compile',"jsonServiceProvider","$stateParams","$http",'socket',function($scope,$rootScope,$window,$state,$compile,jsonServiceProvider,$stateParams,$http,socket){
 
-	app.controller("holidaysController",['$scope','$rootScope','$window','$state','$compile',"jsonServiceProvider","$stateParams",function($scope,$rootScope,$window,$state,$compile,jsonServiceProvider,$stateParams){
-		console.log("inside holidaysController");
+				socket.on('connect',function(data){
+			console.log(data);
+			socket.emit('join',{'mobile':"1234567123"});
+		});
+		socket.on("new_notification",function(res){
+			testNotify(res);
+		}); 
 
-				$scope.goToBack = function(){
+				console.log("inside holidaysController");
+		$rootScope.userData = {};
+		$http({
+			url:"http://local.yatra.com:3000/api/user/1234567"+(Math.round((Math.random() * 99))+100),
+			method:"GET"
+
+					}).then(function(res){
+			$rootScope.userData = res.data[0];
+			userId =  $rootScope.userData.username;
+
+					},function(err){
+
+								});
+		$scope.goToBack = function(){
 			$window.history.back();
 		}
 		$scope.accordian = {};
@@ -168,9 +191,9 @@
 		}
 
 		$scope.confirmBooking = function(list){
-			console.log("booking",list);
+			console.log($rootScope.userData);
 			var requestData={ 
-					u_id: '1234567' + Math.floor(Math.random() * 1000),
+					username: "1234567123",
 					startdate: new Date(list.packageValidity.availableFromDate +"/"+list.packageValidity.availableFromMonth + "/"+list.packageValidity.availableFromYear),
 					flight:{
 						to:$scope.location,
@@ -186,7 +209,20 @@
 						price: Math.floor(Math.random() * 120000),
 					}
 				}
-				console.log("requestData",requestData);
+			$http({
+				url:"http://local.yatra.com:3000/api/book-activity",
+				method:"POST",
+				data:requestData
+			}).then(function(res){
+				console.log()
+			},function(err){
+
+										});
+
+						console.log("booking",list);
+
+
+										console.log("requestData",requestData);
 		}
 
 	}])
@@ -218,8 +254,8 @@
 		};
 	}]);
 
-		app.factory('socketio',['$rootScope',function ($rootScope) {
-	  var socket = io.connect();
+		app.factory('socket',['$rootScope',function ($rootScope) {
+	  var socket = io.connect("http://local.yatra.com:3000");
 	  return {
 		on: function (eventName, callback) {
 		  socket.on(eventName, function () {  
@@ -307,4 +343,22 @@
 		}
 	})
 
+	var testNotify = function(data){
+		var startDate = new Date(data.data.friend_name.start_date);
+		var endDate = new Date(data.data.friend_name.end_date);
+		var startDay = startDate.getDate()+"/"+(startDate.getMonth()+1)+"/"+startDate.getFullYear();
+		var startDay = endDate.getDate()+"/"+(endDate.getMonth()+1)+"/"+endDate.getFullYear();
+		if (Notification.permission !== "granted")
+			Notification.requestPermission();
+		  else {
+			var notification = new Notification('Yatra Amigos Update', {
+			  icon: 'https://css.yatra.com/content/fresco/beetle/images/newIcons/yatra_logo.svg',
+			  body: "Rajnish is Travelling to "+data.data.friend_name.to+" on "+startDay+", you may plan to meet him, He will be Staying at "+data.data.hotel.name+" which costed "+data.data.hotel.price,
+			});
+			notification.onclick = function () {
+			  window.open("http://localhost:3333/#!/amigos/feeds");      
+			};
+
+		  }
+	};
 }(window, angular));	
